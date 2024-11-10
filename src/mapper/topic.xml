@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置Mabatis映射文件 -->
+<mapper namespace="com.dao.TopicDAO">
+  <resultMap type="topic" id="topicMap">
+    <id property="topicid" column="topicid" />
+    <result property="usersid" column="usersid" />
+    <result property="ordersid" column="ordersid" />
+    <result property="goodsid" column="goodsid" />
+    <result property="num" column="num" />
+    <result property="contents" column="contents" />
+    <result property="addtime" column="addtime" />
+    <result property="username" column="username" />
+    <result property="ordercode" column="ordercode" />
+    <result property="goodsname" column="goodsname" />
+  </resultMap>
+  <!-- 插入语句 DAO通过id调用此配置 -->
+  <insert id="insertTopic" parameterType="topic">
+    insert into topic(topicid , usersid , ordersid , goodsid , num , contents , addtime ) values(#{topicid} , #{usersid} , #{ordersid} , #{goodsid} , #{num} ,
+    #{contents} , #{addtime} )
+  </insert>
+  <!-- 更新语句 DAO通过id调用此配置 -->
+  <update id="updateTopic" parameterType="topic">
+    update topic set usersid=#{usersid} , ordersid=#{ordersid} , goodsid=#{goodsid} , num=#{num} , contents=#{contents} , addtime=#{addtime} where topicid=#{topicid}
+  </update>
+  <!-- 按主键删除 DAO通过id调用此配置 -->
+  <delete id="deleteTopic" parameterType="String">
+    delete from topic where topicid = #{topicid}
+  </delete>
+  <!-- 查询全部信息 DAO通过id调用此配置 -->
+  <select id="getAllTopic" resultMap="topicMap">
+    select a.* , b.username , c.ordercode , d.goodsname from topic a , users b , orders c , goods d where a.usersid = b.usersid and a.ordersid = c.ordersid and
+    a.goodsid = d.goodsid order by topicid desc
+  </select>
+  <!-- 按主键查询 DAO通过id调用此配置 -->
+  <select id="getTopicById" parameterType="String" resultMap="topicMap">
+    select a.* , b.username , c.ordercode , d.goodsname from topic a , users b , orders c , goods d where a.usersid = b.usersid and a.ordersid = c.ordersid and
+    a.goodsid = d.goodsid and topicid=#{topicid} order by topicid desc
+  </select>
+  <!-- 按条件精确查询 DAO通过id调用此配置 -->
+  <select id="getTopicByCond" parameterType="topic" resultMap="topicMap">
+    select a.* , b.username , c.ordercode , d.goodsname from topic a , users b , orders c , goods d where a.usersid = b.usersid and a.ordersid = c.ordersid and
+    a.goodsid = d.goodsid
+    <if test="usersid != null and '' != usersid">
+      and a.usersid = #{usersid}
+    </if>
+    <if test="ordersid != null and '' != ordersid">
+      and a.ordersid = #{ordersid}
+    </if>
+    <if test="goodsid != null and '' != goodsid">
+      and a.goodsid = #{goodsid}
+    </if>
+    <if test="num != null and '' != num">
+      and a.num = #{num}
+    </if>
+    <if test="contents != null and '' != contents">
+      and a.contents = #{contents}
+    </if>
+    <if test="addtime != null and '' != addtime">
+      and a.addtime = #{addtime}
+    </if>
+  </select>
+  <!-- 按条件模糊查询 DAO通过id调用此配置 -->
+  <select id="getTopicByLike" parameterType="topic" resultMap="topicMap">
+    select a.* , b.username , c.ordercode , d.goodsname from topic a , users b , orders c , goods d where a.usersid = b.usersid and a.ordersid = c.ordersid and
+    a.goodsid = d.goodsid
+    <if test="usersid != null and '' != usersid">
+      and b.username like CONCAT('%', CONCAT(#{usersid}, '%'))
+    </if>
+    <if test="ordersid != null and '' != ordersid">
+      and c.ordercode like CONCAT('%', CONCAT(#{ordersid}, '%'))
+    </if>
+    <if test="goodsid != null and '' != goodsid">
+      and d.goodsname like CONCAT('%', CONCAT(#{goodsid}, '%'))
+    </if>
+    <if test="num != null and '' != num">
+      and a.num like CONCAT('%', CONCAT(#{num}, '%'))
+    </if>
+    <if test="contents != null and '' != contents">
+      and a.contents like CONCAT('%', CONCAT(#{contents}, '%'))
+    </if>
+    <if test="addtime != null and '' != addtime">
+      and a.addtime like CONCAT('%', CONCAT(#{addtime}, '%'))
+    </if>
+  </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

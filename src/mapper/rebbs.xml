@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置Mabatis映射文件 -->
+<mapper namespace="com.dao.RebbsDAO">
+	<resultMap type="rebbs" id="rebbsMap">
+		<id property="rebbsid" column="rebbsid" />
+		<result property="usersid" column="usersid" />
+		<result property="bbsid" column="bbsid" />
+		<result property="contents" column="contents" />
+		<result property="addtime" column="addtime" />
+		<result property="username" column="username" />
+		<result property="title" column="title" />
+		<result property="image" column="image" />
+	</resultMap>
+	<!-- 插入语句 DAO通过id调用此配置 -->
+	<insert id="insertRebbs" parameterType="rebbs">
+		insert into rebbs(rebbsid , usersid , bbsid , contents , addtime )
+		values(#{rebbsid} , #{usersid} , #{bbsid} , #{contents} , #{addtime} )
+	</insert>
+	<!-- 更新语句 DAO通过id调用此配置 -->
+	<update id="updateRebbs" parameterType="rebbs">
+		update rebbs set usersid=#{usersid} , bbsid=#{bbsid} , contents=#{contents}
+		, addtime=#{addtime} where rebbsid=#{rebbsid}
+	</update>
+	<!-- 按主键删除 DAO通过id调用此配置 -->
+	<delete id="deleteRebbs" parameterType="String">
+		delete from rebbs where
+		rebbsid = #{rebbsid}
+	</delete>
+	<!-- 查询全部信息 DAO通过id调用此配置 -->
+	<select id="getAllRebbs" resultMap="rebbsMap">
+		select a.* , b.username , b.image , c.title from rebbs a , users b , bbs c where
+		a.usersid = b.usersid and a.bbsid = c.bbsid order by rebbsid desc
+	</select>
+	<!-- 按主键查询 DAO通过id调用此配置 -->
+	<select id="getRebbsById" parameterType="String" resultMap="rebbsMap">
+		select a.* , b.username , b.image , c.title from rebbs a , users b , bbs c where
+		a.usersid = b.usersid and a.bbsid = c.bbsid and rebbsid=#{rebbsid}
+		order by rebbsid desc
+	</select>
+	<!-- 按条件精确查询 DAO通过id调用此配置 -->
+	<select id="getRebbsByCond" parameterType="rebbs" resultMap="rebbsMap">
+		select a.* , b.username , b.image , c.title from rebbs a , users b , bbs c where
+		a.usersid = b.usersid and a.bbsid = c.bbsid
+		<if test="usersid != null and '' != usersid">
+			and a.usersid = #{usersid}
+		</if>
+		<if test="bbsid != null and '' != bbsid">
+			and a.bbsid = #{bbsid}
+		</if>
+		<if test="contents != null and '' != contents">
+			and a.contents = #{contents}
+		</if>
+		<if test="addtime != null and '' != addtime">
+			and a.addtime = #{addtime}
+		</if>
+	</select>
+	<!-- 按条件模糊查询 DAO通过id调用此配置 -->
+	<select id="getRebbsByLike" parameterType="rebbs" resultMap="rebbsMap">
+		select a.* , b.username , c.title from rebbs a , users b , bbs c where
+		a.usersid = b.usersid and a.bbsid = c.bbsid
+		<if test="usersid != null and '' != usersid">
+			and b.username like CONCAT('%', CONCAT(#{usersid}, '%'))
+		</if>
+		<if test="bbsid != null and '' != bbsid">
+			and c.title like CONCAT('%', CONCAT(#{bbsid}, '%'))
+		</if>
+		<if test="contents != null and '' != contents">
+			and a.contents like CONCAT('%', CONCAT(#{contents}, '%'))
+		</if>
+		<if test="addtime != null and '' != addtime">
+			and a.addtime like CONCAT('%', CONCAT(#{addtime}, '%'))
+		</if>
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--  -->

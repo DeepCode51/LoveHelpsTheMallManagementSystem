@@ -1,0 +1,60 @@
+.slider {
+	position: absolute;
+	width: 100%;
+	height: 425px;
+}
+
+.slider li, .slider li a {
+	list-style: none;
+	float: left;
+	width: 100%;
+	height: 425px;
+}
+
+.slider img {
+	width: 100%;
+	height: 425px;
+	display: block;
+}
+
+.slider2 {
+	width: 2000px;
+}
+
+.slider2 li {
+	float: left;
+}
+
+.num {
+	position: absolute;
+	right: 400px;
+	bottom: 20px;
+}
+
+.num li {
+	float: left;
+	color: #00c2de;
+	text-align: center;
+	line-height: 16px;
+	width: 16px;
+	height: 16px;
+	font-family: Arial;
+	font-size: 12px;
+	cursor: pointer;
+	overflow: hidden;
+	margin: 3px 1px;
+	border: 1px solid #00c2de;
+	background-color: #fff;
+}
+
+.num li.on {
+	color: #fff;
+	line-height: 21px;
+	width: 21px;
+	height: 21px;
+	font-size: 16px;
+	margin: 0 1px;
+	border: 0;
+	background-color: #00c2de;
+	font-weight: bold;
+}

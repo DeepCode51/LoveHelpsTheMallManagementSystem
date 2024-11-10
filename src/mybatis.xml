@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+  <typeAliases>
+    <typeAlias alias="admin" type="com.entity.Admin" />
+    <typeAlias alias="users" type="com.entity.Users" />
+    <typeAlias alias="banner" type="com.entity.Banner" />
+    <typeAlias alias="article" type="com.entity.Article" />
+    <typeAlias alias="cate" type="com.entity.Cate" />
+    <typeAlias alias="goods" type="com.entity.Goods" />
+    <typeAlias alias="cart" type="com.entity.Cart" />
+    <typeAlias alias="fav" type="com.entity.Fav" />
+    <typeAlias alias="orders" type="com.entity.Orders" />
+    <typeAlias alias="topic" type="com.entity.Topic" />
+    <typeAlias alias="complains" type="com.entity.Complains" />
+    <typeAlias alias="bbs" type="com.entity.Bbs" />
+    <typeAlias alias="rebbs" type="com.entity.Rebbs" />
+  </typeAliases>
+  <mappers>
+    <mapper resource="mapper/admin.xml" />
+    <mapper resource="mapper/users.xml" />
+    <mapper resource="mapper/banner.xml" />
+    <mapper resource="mapper/article.xml" />
+    <mapper resource="mapper/cate.xml" />
+    <mapper resource="mapper/goods.xml" />
+    <mapper resource="mapper/cart.xml" />
+    <mapper resource="mapper/fav.xml" />
+    <mapper resource="mapper/orders.xml" />
+    <mapper resource="mapper/topic.xml" />
+    <mapper resource="mapper/complains.xml" />
+    <mapper resource="mapper/bbs.xml" />
+    <mapper resource="mapper/rebbs.xml" />
+  </mappers>
+</configuration>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

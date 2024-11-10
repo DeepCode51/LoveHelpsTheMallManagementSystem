@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置Mabatis映射文件 -->
+<mapper namespace="com.dao.BbsDAO">
+	<resultMap type="bbs" id="bbsMap">
+		<id property="bbsid" column="bbsid" />
+		<result property="usersid" column="usersid" />
+		<result property="title" column="title" />
+		<result property="contents" column="contents" />
+		<result property="addtime" column="addtime" />
+		<result property="hits" column="hits" />
+		<result property="repnum" column="repnum" />
+		<result property="username" column="username" />
+		<result property="image" column="image" />
+	</resultMap>
+	<!-- 插入语句 DAO通过id调用此配置 -->
+	<insert id="insertBbs" parameterType="bbs">
+		insert into bbs(bbsid ,
+		usersid , title , contents , addtime , hits , repnum
+		) values(#{bbsid}
+		, #{usersid} , #{title} , #{contents} , #{addtime} ,
+		#{hits} ,
+		#{repnum} )
+	</insert>
+	<!-- 更新语句 DAO通过id调用此配置 -->
+	<update id="updateBbs" parameterType="bbs">
+		update bbs set
+		usersid=#{usersid} , title=#{title} , contents=#{contents} ,
+		addtime=#{addtime} , hits=#{hits} , repnum=#{repnum} where
+		bbsid=#{bbsid}
+	</update>
+	<!-- 按主键删除 DAO通过id调用此配置 -->
+	<delete id="deleteBbs" parameterType="String">
+		delete from bbs where bbsid
+		= #{bbsid}
+	</delete>
+	<!-- 查询全部信息 DAO通过id调用此配置 -->
+	<select id="getAllBbs" resultMap="bbsMap">
+		select a.* , b.username ,
+		b.image from bbs a , users b where a.usersid = b.usersid
+		order by bbsid
+		desc
+	</select>
+	<!-- 按主键查询 DAO通过id调用此配置 -->
+	<select id="getBbsById" parameterType="String" resultMap="bbsMap">
+		select
+		a.* , b.username , b.image from bbs a , users b where a.usersid =
+		b.usersid and
+		bbsid=#{bbsid} order by bbsid desc
+	</select>
+	<!-- 按条件精确查询 DAO通过id调用此配置 -->
+	<select id="getBbsByCond" parameterType="bbs" resultMap="bbsMap">
+		select a.* , b.username , b.image from bbs a , users b where a.usersid
+		=
+		b.usersid
+		<if test="usersid != null and '' != usersid">
+			and a.usersid = #{usersid}
+		</if>
+		<if test="title != null and '' != title">
+			and a.title = #{title}
+		</if>
+		<if test="contents != null and '' != contents">
+			and a.contents = #{contents}
+		</if>
+		<if test="addtime != null and '' != addtime">
+			and a.addtime = #{addtime}
+		</if>
+		<if test="hits != null and '' != hits">
+			and a.hits = #{hits}
+		</if>
+		<if test="repnum != null and '' != repnum">
+			and a.repnum = #{repnum}
+		</if>
+	</select>
+	<!-- 按条件模糊查询 DAO通过id调用此配置 -->
+	<select id="getBbsByLike" parameterType="bbs" resultMap="bbsMap">
+		select a.* , b.username , b.image from bbs a , users b where a.usersid
+		=
+		b.usersid
+		<if test="usersid != null and '' != usersid">
+			and b.username like CONCAT('%', CONCAT(#{usersid}, '%'))
+		</if>
+		<if test="title != null and '' != title">
+			and a.title like CONCAT('%', CONCAT(#{title}, '%'))
+		</if>
+		<if test="contents != null and '' != contents">
+			and a.contents like CONCAT('%', CONCAT(#{contents}, '%'))
+		</if>
+		<if test="addtime != null and '' != addtime">
+			and a.addtime like CONCAT('%', CONCAT(#{addtime}, '%'))
+		</if>
+		<if test="hits != null and '' != hits">
+			and a.hits like CONCAT('%', CONCAT(#{hits}, '%'))
+		</if>
+		<if test="repnum != null and '' != repnum">
+			and a.repnum like CONCAT('%', CONCAT(#{repnum}, '%'))
+		</if>
+	</select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--  -->

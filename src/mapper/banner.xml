@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置Mabatis映射文件 -->
+<mapper namespace="com.dao.BannerDAO">
+  <resultMap type="banner" id="bannerMap">
+    <id property="bannerid" column="bannerid" />
+    <result property="bannername" column="bannername" />
+    <result property="addtime" column="addtime" />
+    <result property="memo" column="memo" />
+  </resultMap>
+  <!-- 插入语句 DAO通过id调用此配置 -->
+  <insert id="insertBanner" parameterType="banner">
+    insert into banner(bannerid , bannername , addtime , memo ) values(#{bannerid} , #{bannername} , #{addtime} , #{memo} )
+  </insert>
+  <!-- 更新语句 DAO通过id调用此配置 -->
+  <update id="updateBanner" parameterType="banner">
+    update banner set bannername=#{bannername} , addtime=#{addtime} , memo=#{memo} where bannerid=#{bannerid}
+  </update>
+  <!-- 按主键删除 DAO通过id调用此配置 -->
+  <delete id="deleteBanner" parameterType="String">
+    delete from banner where bannerid = #{bannerid}
+  </delete>
+  <!-- 查询全部信息 DAO通过id调用此配置 -->
+  <select id="getAllBanner" resultMap="bannerMap">
+    select a.* from banner a order by bannerid asc
+  </select>
+  <!-- 按主键查询 DAO通过id调用此配置 -->
+  <select id="getBannerById" parameterType="String" resultMap="bannerMap">
+    select a.* from banner a where bannerid=#{bannerid} order by bannerid desc
+  </select>
+  <!-- 按条件精确查询 DAO通过id调用此配置 -->
+  <select id="getBannerByCond" parameterType="banner" resultMap="bannerMap">
+    select a.* from banner a where 1=1
+    <if test="bannername != null and '' != bannername">
+      and a.bannername = #{bannername}
+    </if>
+    <if test="addtime != null and '' != addtime">
+      and a.addtime = #{addtime}
+    </if>
+    <if test="memo != null and '' != memo">
+      and a.memo = #{memo}
+    </if>
+  </select>
+  <!-- 按条件模糊查询 DAO通过id调用此配置 -->
+  <select id="getBannerByLike" parameterType="banner" resultMap="bannerMap">
+    select a.* from banner a where 1=1
+    <if test="bannername != null and '' != bannername">
+      and a.bannername like CONCAT('%', CONCAT(#{bannername}, '%'))
+    </if>
+    <if test="addtime != null and '' != addtime">
+      and a.addtime like CONCAT('%', CONCAT(#{addtime}, '%'))
+    </if>
+    <if test="memo != null and '' != memo">
+      and a.memo like CONCAT('%', CONCAT(#{memo}, '%'))
+    </if>
+  </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置Mabatis映射文件 -->
+<mapper namespace="com.dao.GoodsDAO">
+  <resultMap type="goods" id="goodsMap">
+    <id property="goodsid" column="goodsid" />
+    <result property="usersid" column="usersid" />
+    <result property="goodsname" column="goodsname" />
+    <result property="image" column="image" />
+    <result property="cateid" column="cateid" />
+    <result property="price" column="price" />
+    <result property="storage" column="storage" />
+    <result property="addtime" column="addtime" />
+    <result property="hits" column="hits" />
+    <result property="sellnum" column="sellnum" />
+    <result property="contents" column="contents" />
+    <result property="username" column="username" />
+    <result property="catename" column="catename" />
+  </resultMap>
+  <!-- 插入语句 DAO通过id调用此配置 -->
+  <insert id="insertGoods" parameterType="goods">
+    insert into goods(goodsid , usersid , goodsname , image , cateid , price , storage , addtime , hits , sellnum , contents ) values(#{goodsid} , #{usersid} ,
+    #{goodsname} , #{image} , #{cateid} , #{price} , #{storage} , #{addtime} , #{hits} , #{sellnum} , #{contents} )
+  </insert>
+  <!-- 更新语句 DAO通过id调用此配置 -->
+  <update id="updateGoods" parameterType="goods">
+    update goods set usersid=#{usersid} , goodsname=#{goodsname} , image=#{image} , cateid=#{cateid} , price=#{price} , storage=#{storage} , addtime=#{addtime} ,
+    hits=#{hits} , sellnum=#{sellnum} , contents=#{contents} where goodsid=#{goodsid}
+  </update>
+  <!-- 按主键删除 DAO通过id调用此配置 -->
+  <delete id="deleteGoods" parameterType="String">
+    delete from goods where goodsid = #{goodsid}
+  </delete>
+  <!-- 查询全部信息 DAO通过id调用此配置 -->
+  <select id="getAllGoods" resultMap="goodsMap">
+    select a.* , b.username , c.catename from goods a , users b , cate c where a.usersid = b.usersid and a.cateid = c.cateid order by goodsid desc
+  </select>
+  <select id="getGoodsByNews" resultMap="goodsMap">
+    select a.* , b.username , c.catename from goods a , users b , cate c where a.usersid = b.usersid and a.cateid = c.cateid
+    order by goodsid desc limit 5
+  </select>
+
+  <select id="getGoodsByHot" resultMap="goodsMap">
+    select a.* , b.username , c.catename from goods a , users b , cate c where a.usersid = b.usersid and a.cateid = c.cateid
+    order by hits desc limit 5
+  </select>
+
+  <select id="getGoodsByCate" parameterType="String" resultMap="goodsMap">
+   select a.* , b.username , c.catename from goods a , users b , cate c where a.usersid = b.usersid and a.cateid = c.cateid
+    and a.cateid=#{cateid} order by hits desc limit 5
+  </select>
+  <!-- 按主键查询 DAO通过id调用此配置 -->
+  <select id="getGoodsById" parameterType="String" resultMap="goodsMap">
+    select a.* , b.username , c.catename from goods a , users b , cate c where a.usersid = b.usersid and a.cateid = c.cateid and goodsid=#{goodsid} order by
+    goodsid desc
+  </select>
+  <!-- 按条件精确查询 DAO通过id调用此配置 -->
+  <select id="getGoodsByCond" parameterType="goods" resultMap="goodsMap">
+    select a.* , b.username , c.catename from goods a , users b , cate c where a.usersid = b.usersid and a.cateid = c.cateid
+    <if test="usersid != null and '' != usersid">
+      and a.usersid = #{usersid}
+    </if>
+    <if test="goodsname != null and '' != goodsname">
+      and a.goodsname = #{goodsname}
+    </if>
+    <if test="image != null and '' != image">
+      and a.image = #{image}
+    </if>
+    <if test="cateid != null and '' != cateid">
+      and a.cateid = #{cateid}
+    </if>
+    <if test="price != null and '' != price">
+      and a.price = #{price}
+    </if>
+    <if test="storage != null and '' != storage">
+      and a.storage = #{storage}
+    </if>
+    <if test="addtime != null and '' != addtime">
+      and a.addtime = #{addtime}
+    </if>
+    <if test="hits != null and '' != hits">
+      and a.hits = #{hits}
+    </if>
+    <if test="sellnum != null and '' != sellnum">
+      and a.sellnum = #{sellnum}
+    </if>
+    <if test="contents != null and '' != contents">
+      and a.contents = #{contents}
+    </if>
+  </select>
+  <!-- 按条件模糊查询 DAO通过id调用此配置 -->
+  <select id="getGoodsByLike" parameterType="goods" resultMap="goodsMap">
+    select a.* , b.username , c.catename from goods a , users b , cate c where a.usersid = b.usersid and a.cateid = c.cateid
+    <if test="usersid != null and '' != usersid">
+      and b.username like CONCAT('%', CONCAT(#{usersid}, '%'))
+    </if>
+    <if test="goodsname != null and '' != goodsname">
+      and a.goodsname like CONCAT('%', CONCAT(#{goodsname}, '%'))
+    </if>
+    <if test="image != null and '' != image">
+      and a.image like CONCAT('%', CONCAT(#{image}, '%'))
+    </if>
+    <if test="cateid != null and '' != cateid">
+      and c.catename like CONCAT('%', CONCAT(#{cateid}, '%'))
+    </if>
+    <if test="price != null and '' != price">
+      and a.price like CONCAT('%', CONCAT(#{price}, '%'))
+    </if>
+    <if test="storage != null and '' != storage">
+      and a.storage like CONCAT('%', CONCAT(#{storage}, '%'))
+    </if>
+    <if test="addtime != null and '' != addtime">
+      and a.addtime like CONCAT('%', CONCAT(#{addtime}, '%'))
+    </if>
+    <if test="hits != null and '' != hits">
+      and a.hits like CONCAT('%', CONCAT(#{hits}, '%'))
+    </if>
+    <if test="sellnum != null and '' != sellnum">
+      and a.sellnum like CONCAT('%', CONCAT(#{sellnum}, '%'))
+    </if>
+    <if test="contents != null and '' != contents">
+      and a.contents like CONCAT('%', CONCAT(#{contents}, '%'))
+    </if>
+  </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

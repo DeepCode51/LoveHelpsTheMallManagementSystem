@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 配置Mabatis映射文件 -->
+<mapper namespace="com.dao.OrdersDAO">
+  <resultMap type="orders" id="ordersMap">
+    <id property="ordersid" column="ordersid" />
+    <result property="ordercode" column="ordercode" />
+    <result property="usersid" column="usersid" />
+    <result property="goodsid" column="goodsid" />
+    <result property="price" column="price" />
+    <result property="num" column="num" />
+    <result property="total" column="total" />
+    <result property="addtime" column="addtime" />
+    <result property="status" column="status" />
+    <result property="username" column="username" />
+    <result property="goodsname" column="goodsname" />
+    <result property="sellerid" column="sellerid" />
+  </resultMap>
+  <!-- 插入语句 DAO通过id调用此配置 -->
+  <insert id="insertOrders" parameterType="orders">
+    insert into orders(ordersid , ordercode , usersid , goodsid , price , num , total , addtime , status ) values(#{ordersid} , #{ordercode} , #{usersid} , #{goodsid} ,
+    #{price} , #{num} , #{total} , #{addtime} , #{status} )
+  </insert>
+  <!-- 更新语句 DAO通过id调用此配置 -->
+  <update id="updateOrders" parameterType="orders">
+    update orders set ordercode=#{ordercode} , usersid=#{usersid} , goodsid=#{goodsid} , price=#{price} , num=#{num} , total=#{total} , addtime=#{addtime} ,
+    status=#{status} where ordersid=#{ordersid}
+  </update>
+  <!-- 按主键删除 DAO通过id调用此配置 -->
+  <delete id="deleteOrders" parameterType="String">
+    delete from orders where ordersid = #{ordersid}
+  </delete>
+  <!-- 查询全部信息 DAO通过id调用此配置 -->
+  <select id="getAllOrders" resultMap="ordersMap">
+    select a.* , b.username , c.goodsname from orders a , users b , goods c where a.usersid = b.usersid and a.goodsid = c.goodsid order by ordersid desc
+  </select>
+  <!-- 按主键查询 DAO通过id调用此配置 -->
+  <select id="getOrdersById" parameterType="String" resultMap="ordersMap">
+    select a.* , b.username , c.goodsname from orders a , users b , goods c where a.usersid = b.usersid and a.goodsid = c.goodsid and ordersid=#{ordersid} order by
+    ordersid desc
+  </select>
+  <!-- 按条件精确查询 DAO通过id调用此配置 -->
+  <select id="getOrdersByCond" parameterType="orders" resultMap="ordersMap">
+    select a.* , b.username , c.goodsname from orders a , users b , goods c where a.usersid = b.usersid and a.goodsid = c.goodsid
+    <if test="ordercode != null and '' != ordercode">
+      and a.ordercode = #{ordercode}
+    </if>
+    <if test="usersid != null and '' != usersid">
+      and a.usersid = #{usersid}
+    </if>
+    <if test="goodsid != null and '' != goodsid">
+      and a.goodsid = #{goodsid}
+    </if>
+    <if test="price != null and '' != price">
+      and a.price = #{price}
+    </if>
+    <if test="num != null and '' != num">
+      and a.num = #{num}
+    </if>
+    <if test="total != null and '' != total">
+      and a.total = #{total}
+    </if>
+    <if test="addtime != null and '' != addtime">
+      and a.addtime = #{addtime}
+    </if>
+    <if test="status != null and '' != status">
+      and a.status = #{status}
+    </if>
+    <if test="sellerid != null and '' != sellerid">
+      and c.usersid = #{sellerid}
+    </if>
+    
+  </select>
+  <!-- 按条件模糊查询 DAO通过id调用此配置 -->
+  <select id="getOrdersByLike" parameterType="orders" resultMap="ordersMap">
+    select a.* , b.username , c.goodsname from orders a , users b , goods c where a.usersid = b.usersid and a.goodsid = c.goodsid
+    <if test="ordercode != null and '' != ordercode">
+      and a.ordercode like CONCAT('%', CONCAT(#{ordercode}, '%'))
+    </if>
+    <if test="usersid != null and '' != usersid">
+      and b.username like CONCAT('%', CONCAT(#{usersid}, '%'))
+    </if>
+    <if test="goodsid != null and '' != goodsid">
+      and c.goodsname like CONCAT('%', CONCAT(#{goodsid}, '%'))
+    </if>
+    <if test="price != null and '' != price">
+      and a.price like CONCAT('%', CONCAT(#{price}, '%'))
+    </if>
+    <if test="num != null and '' != num">
+      and a.num like CONCAT('%', CONCAT(#{num}, '%'))
+    </if>
+    <if test="total != null and '' != total">
+      and a.total like CONCAT('%', CONCAT(#{total}, '%'))
+    </if>
+    <if test="addtime != null and '' != addtime">
+      and a.addtime like CONCAT('%', CONCAT(#{addtime}, '%'))
+    </if>
+    <if test="status != null and '' != status">
+      and a.status like CONCAT('%', CONCAT(#{status}, '%'))
+    </if>
+  </select>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
